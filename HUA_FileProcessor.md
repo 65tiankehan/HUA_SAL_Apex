@@ -1,5 +1,5 @@
 # HUA\_FileProcessor 使用手册
-
+![コード例](codeBuik2.png)
 ## 作者
 
 HUA\_JI\_WU\_NIAN
