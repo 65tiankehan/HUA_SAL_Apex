@@ -26,6 +26,9 @@
   - [resetUserPassword](#resetuserpassword)
   - [describeListView](#describelistview)
   - [fetchListViewResults](#fetchlistviewresults)
+  - [getAnyQuery](#getAnyQuery)
+  - [getObjectisInformation](#getObjectisInformation)
+  - [getFieldInformation](#getFieldInformation)
 
 ## 简介
 
@@ -188,3 +191,22 @@
 - `Integer offset`：返回的第一条记录。此参数用于对结果进行分页。默认为 0。
 
 **返回**：包含列表视图结果的映射。
+
+### getAnyQuery
+- **描述**: 执行任意 SOQL 查询并返回结果。
+- **参数**:
+  - `soqlQuery` (String): 要执行的 SOQL 查询字符串。
+- **返回**: `List<SObject>` - 查询结果列表。
+
+### getObjectisInformation
+- **描述**: 获取指定对象的描述信息。
+- **参数**:
+  - `objectName` (String): 对象名称。
+- **返回**: `Schema.DescribeSObjectResult` - 对象的描述信息。
+
+### getFieldInformation
+- **描述**: 获取指定对象和字段的描述信息。
+- **参数**:
+  - `objectTypeName` (String): 对象类型名称。
+  - `sFieldName` (String): 字段名称。
+- **返回**: `Map<String, object>` - 包含字段描述信息的映射。
