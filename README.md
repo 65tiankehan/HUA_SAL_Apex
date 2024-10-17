@@ -1,15 +1,15 @@
-# HUA_Meta_tool.cls 文档
+# HUA_Meta_tool.cls ドキュメント
     作者 ：HUA_JI_WU_NIAN
-    创建时间：2024年10月17日
-    更新时间：2024年10月17日
-    出发点：在 Salesforce 中，我们经常需要处理对象和字段，例如更新字段值、获取字段信息、处理审批流程等。为了简化这一过程，我们可以使用这个工具类。
+    作成日：2024年10月17日
+    更新日：2024年10月17日
+    目的：Salesforce では、オブジェクトやフィールドの処理（フィールド値の更新、フィールド情報の取得、承認フローの処理など）を頻繁に行います。これらのプロセスを簡素化するために、このツールクラスを使用できます。
 
-![代码示例](code.png)
+![コード例](code.png)
 
-## 目录
+## 目次
 
-- [简介](#简介)
-- [方法列表](#方法列表)
+- [概要](#概要)
+- [メソッドリスト](#メソッドリスト)
   - [updateObjects](#updateobjects)
   - [getAllFieldNames](#getallfieldnames)
   - [clearingObjectProperties](#clearingobjectproperties)
@@ -26,187 +26,177 @@
   - [resetUserPassword](#resetuserpassword)
   - [describeListView](#describelistview)
   - [fetchListViewResults](#fetchlistviewresults)
-  - [getAnyQuery](#getAnyQuery)
-  - [getObjectisInformation](#getObjectisInformation)
-  - [getFieldInformation](#getFieldInformation)
+  - [getAnyQuery](#getanyquery)
+  - [getObjectisInformation](#getobjectisinformation)
+  - [getFieldInformation](#getfieldinformation)
 
-## 简介
+## 概要
 
-`HUA_Meta_tool.cls` 是一个 Salesforce Apex 类，提供了多种静态方法来操作和管理 Salesforce 中的对象和字段。这些方法涵盖了从更新对象字段、获取字段信息、到处理审批流程和用户密码管理等多个方面。
+`HUA_Meta_tool.cls` は、Salesforce Apex クラスで、Salesforce のオブジェクトとフィールドを操作および管理するための複数の静的メソッドを提供します。これらのメソッドは、オブジェクトフィールドの更新、フィールド情報の取得、承認フローの処理、ユーザーのパスワード管理など、さまざまな機能をカバーしています。
 
-## 方法列表
+## メソッドリスト
 
 ### updateObjects
 
-**功能**：更新指定 SObject 的字段值。
+**機能**：指定された SObject のフィールド値を更新します。
 
-**参数**：
-- `SObject Objects`：要更新的 SObject。
-- `Map<String, Object> fieldMaps`：字段名及其新值的映射。
+**パラメータ**：
+- `SObject Objects`：更新対象の SObject。
+- `Map<String, Object> fieldMaps`：フィールド名と新しい値のマップ。
 
-**返回**：更新后的 SObject。
+**戻り値**：更新後の SObject。
 
 ### getAllFieldNames
 
-**功能**：获取指定对象类型的全部字段名。
+**機能**：指定されたオブジェクトタイプのすべてのフィールド名を取得します。
 
-**参数**：
-- `String objectName`：要获取字段名的对象名称。
+**パラメータ**：
+- `String objectName`：フィールド名を取得したいオブジェクトの名前。
 
-**返回**：包含指定对象所有字段名的字符串列表。
+**戻り値**：指定されたオブジェクトのすべてのフィールド名を含む文字列リスト。
 
 ### clearingObjectProperties
 
-**功能**：清除指定 SObject 的特定字段值。
+**機能**：指定された SObject の特定のフィールド値をクリアします。
 
-**参数**：
-- `SObject masterObj`：要清除字段值的 SObject。
-- `List<String> fields`：要清除值的字段名列表。
+**パラメータ**：
+- `SObject masterObj`：フィールド値をクリアしたい SObject。
+- `List<String> fields`：クリアしたいフィールド名のリスト。
 
-**返回**：特定字段值被清除后的 SObject。
+**戻り値**：特定のフィールド値がクリアされた SObject。
 
 ### createOjbects
 
-**功能**：使用指定的对象类型和字段映射创建新的 SObject。
+**機能**：指定されたオブジェクトタイプとフィールドマップを使用して新しい SObject を作成します。
 
-**参数**：
-- `String objectTypeName`：要创建的对象类型名称。
-- `Map<String, Object> fieldMaps`：字段名及其值的映射。
+**パラメータ**：
+- `String objectTypeName`：作成したいオブジェクトタイプの名前。
+- `Map<String, Object> fieldMaps`：フィールド名と値のマップ。
 
-**返回**：新创建的 SObject 对象或 null。
+**戻り値**：新しく作成された SObject オブジェクトまたは null。
 
 ### mergeObjects
 
-**功能**：合并两个 Salesforce 对象。
+**機能**：2つの Salesforce オブジェクトをマージします。
 
-**参数**：
-- `SObject masterObj`：更新目标对象。
-- `SObject mergeObj`：值来源对象。
+**パラメータ**：
+- `SObject masterObj`：更新対象のオブジェクト。
+- `SObject mergeObj`：値のソースオブジェクト。
 
-**返回**：合并后的 SObject。
+**戻り値**：マージ後の SObject。
 
 ### handleException
 
-**功能**：处理异常并记录详细信息。
+**機能**：例外を処理し、詳細情報を記録します。
 
-**参数**：
-- `Exception e`：发生的异常。
+**パラメータ**：
+- `Exception e`：発生した例外。
 
 ### flexibleConfigurationObjectInfo
 
-**功能**：使用灵活配置更新 Salesforce 对象。
+**機能**：柔軟な構成を使用して Salesforce オブジェクトを更新します。
 
-**参数**：
-- `String strJson`：表示要更新字段的 JSON 字符串。
-- `Id id`：要更新的对象 ID。
+**パラメータ**：
+- `String strJson`：更新したいフィールドを表す JSON 文字列。
+- `Id id`：更新したいオブジェクトの ID。
 
 ### getPicklistValues
 
-**功能**：获取指定 SObject 和字段的 picklist 值。
+**機能**：指定された SObject とフィールドのピックリスト値を取得します。
 
-**参数**：
-- `String sObjectName`：SObject 名称。
-- `String sFieldName`：字段名称。
+**パラメータ**：
+- `String sObjectName`：SObject の名前。
+- `String sFieldName`：フィールドの名前。
 
-**返回**：包含 picklist 值的映射。
+**戻り値**：ピックリスト値を含むマップ。
 
 ### getApprovalHistory
 
-**功能**：获取指定记录 ID 的审批历史。
+**機能**：指定されたレコード ID の承認履歴を取得します。
 
-**参数**：
-- `Id recordId`：目标记录 ID。
-- `Map<String, String> statusParams`：状态参数映射。
+**パラメータ**：
+- `Id recordId`：対象のレコード ID。
+- `Map<String, String> statusParams`：状態パラメータのマップ。
 
-**返回**：包含审批历史信息的列表。
+**戻り値**：承認履歴情報を含むリスト。
 
 ### submitApprovalWorkitems
 
-**功能**：提交指定记录 ID 的审批工作项。
+**機能**：指定されたレコード ID の承認ワークアイテムを提出します。
 
-**参数**：
-- `Id recordId`：目标记录 ID。
-- `String status`：审批状态（例如：'Approve', 'Reject'）。
-- `String message`：审批时的评论。
-- `Id nextApproverId`：下一个审批者的 ID。
+**パラメータ**：
+- `Id recordId`：対象のレコード ID。
+- `String status`：承認ステータス（例：'Approve', 'Reject'）。
+- `String message`：承認時のコメント。
+- `Id nextApproverId`：次の承認者の ID。
 
-**返回**：处理是否成功的布尔值。
+**戻り値**：処理が成功したかどうかのブーリアン値。
 
 ### isLockedObjects
 
-**功能**：检查指定对象 ID 列表中的对象是否被锁定。
+**機能**：指定されたオブジェクト ID リストのオブジェクトがロックされているかどうかを確認します。
 
-**参数**：
-- `Map<Id, Object> params`：对象 ID 和对象的映射。
+**パラメータ**：
+- `Map<Id, Object> params`：オブジェクト ID とオブジェクトのマップ。
 
-**返回**：包含每个对象是否被锁定的结果映射。
+**戻り値**：各オブジェクトがロックされているかどうかの結果マップ。
 
 ### fetchRecordLayout
 
-**功能**：获取指定对象和记录类型 ID 的布局信息。
+**機能**：指定されたオブジェクトとレコードタイプ ID のレイアウト情報を取得します。
 
-**参数**：
-- `String objectName`：对象名称。
-- `String recordTypeId`：记录类型 ID。
+**パラメータ**：
+- `String objectName`：オブジェクトの名前。
+- `String recordTypeId`：レコードタイプ ID。
 
-**返回**：包含布局信息的映射。
+**戻り値**：レイアウト情報を含むマップ。
 
 ### updateUserPassword
 
-**功能**：使用指定用户 ID 设置用户的密码。
+**機能**：指定されたユーザー ID を使用してユーザーのパスワードを設定します。
 
-**参数**：
-- `String userId`：用户 ID。
-- `String newPassword`：新密码。
+**パラメータ**：
+- `String userId`：ユーザー ID。
+- `String newPassword`：新しいパスワード。
 
-**返回**：更新是否成功的布尔值。
+**戻り値**：更新が成功したかどうかのブーリアン値。
 
 ### resetUserPassword
 
-**功能**：使用指定用户 ID 重置用户的密码。
+**機能**：指定されたユーザー ID を使用してユーザーのパスワードをリセットします。
 
-**参数**：
-- `String userId`：用户 ID。
+**パラメータ**：
+- `String userId`：ユーザー ID。
 
-**返回**：重置是否成功的布尔值。
+**戻り値**：リセットが成功したかどうかのブーリアン値。
 
 ### describeListView
 
-**功能**：使用指定对象和查询定位器获取列表视图的详细信息。
+**機能**：指定されたオブジェクトとクエリロケーターを使用してリストビューの詳細情報を取得します。
 
-**参数**：
-- `String sObjectName`：对象名称。
-- `String queryLocator`：查询定位器。
+**パラメータ**：
+- `String sObjectName`：オブジェクトの名前。
+- `String queryLocator`：クエリロケーター。
 
-**返回**：包含列表视图详细信息的映射。
+**戻り値**：リストビューの詳細情報を含むマップ。
 
 ### fetchListViewResults
 
-**功能**：使用指定对象和列表视图 ID 获取列表视图的结果。
+**機能**：指定されたオブジェクトとリストビュー ID を使用してリストビューの結果を取得します。
 
-**参数**：
-- `String sObjectName`：对象名称。
-- `String listViewId`：列表视图 ID。
-- `Integer limit`：最大返回记录数（1-2000）。默认为 25。
-- `Integer offset`：返回的第一条记录。此参数用于对结果进行分页。默认为 0。
+**パラメータ**：
+- `String sObjectName`：オブジェクトの名前。
+- `String listViewId`：リストビュー ID。
+- `Integer limit`：最大返却レコード数（1-2000）。デフォルトは 25。
+- `Integer offset`：返却される最初のレコード。このパラメータは結果のページングに使用されます。デフォルトは 0。
 
-**返回**：包含列表视图结果的映射。
+**戻り値**：リストビューの結果を含むマップ。
 
 ### getAnyQuery
-- **描述**: 执行任意 SOQL 查询并返回结果。
-- **参数**:
-  - `soqlQuery` (String): 要执行的 SOQL 查询字符串。
-- **返回**: `List<SObject>` - 查询结果列表。
+- **説明**: 任意の SOQL クエリを実行し、結果を返します。
+- **パラメータ**:
+  - `soqlQuery` (String): 実行する SOQL クエリ文字列。
+- **戻り値**: `List<SObject>` - クエリ結果のリスト。
 
 ### getObjectisInformation
-- **描述**: 获取指定对象的描述信息。
-- **参数**:
-  - `objectName` (String): 对象名称。
-- **返回**: `Schema.DescribeSObjectResult` - 对象的描述信息。
-
-### getFieldInformation
-- **描述**: 获取指定对象和字段的描述信息。
-- **参数**:
-  - `objectTypeName` (String): 对象类型名称。
-  - `sFieldName` (String): 字段名称。
-- **返回**: `Map<String, object>` - 包含字段描述信息的映射。
+- **説明**: 指定されたオブジェクトの
