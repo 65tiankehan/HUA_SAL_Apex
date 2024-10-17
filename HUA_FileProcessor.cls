@@ -23,10 +23,7 @@ HUA_FileProcessor.processCSVFile(csvFile, 'Account', 'delete');
  * @class HUA_FileProcessor - CSVファイル処理ユーティリティクラス
  */
 public without sharing class HUA_FileProcessor {
-    // 組織ドメインURLとAPIエンドポイントのベースURL
-    private static final String BASE_URL = URL.getOrgDomainURL().toExternalForm() + '/services/data/v62.0/jobs/ingest/';
-    // 認証トークン
-    private static final String AUTH_TOKEN = 'Bearer ' + UserInfo.getSessionId();
+ 
 
     /**
      * CSVファイルを処理し、操作タイプに応じて挿入、更新、または削除操作を実行する
