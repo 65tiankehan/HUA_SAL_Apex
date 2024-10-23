@@ -29,7 +29,8 @@
   - [getAnyQuery](#getanyquery)
   - [getObjectisInformation](#getobjectisinformation)
   - [getFieldInformation](#getfieldinformation)
-
+  - [getAllObjects](#getAllObjects)
+  - [searchObjectsLike](#searchObjectsLike)
 ## 概要
 
 `HUA_Meta_tool.cls` は、Salesforce Apex クラスで、Salesforce のオブジェクトとフィールドを操作および管理するための複数の静的メソッドを提供します。これらのメソッドは、オブジェクトフィールドの更新、フィールド情報の取得、承認フローの処理、ユーザーのパスワード管理など、さまざまな機能をカバーしています。
@@ -200,3 +201,23 @@
 
 ### getObjectisInformation
 - **説明**: 指定されたオブジェクトの
+
+### getAllObjects
+
+**機能**：すべてのアクセス可能なカスタムおよび標準オブジェクトの情報を取得します。
+
+**パラメータ**：
+- `List<String>  objectNames`：オオブジェクト名。
+
+
+**戻り値**：オブジェクトラベルをキーとし、オブジェクト情報（名前とラベル）のリストを値とするマップを返します。
+
+### searchObjectsLike
+
+**機能**：単一の名詞を受け取り、Schema.getGlobalDescribe() が返す key で like モードでの検索を行う
+
+**パラメータ**：
+- `String searchKeyword`：検索キーワード。
+
+
+**戻り値**：マッチしたオブジェクト情報の Map。
