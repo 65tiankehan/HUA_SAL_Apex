@@ -1,0 +1,39 @@
+<template>
+    <lightning-card title="CSVファイルアップロード">
+        <div class="slds-p-around_medium">
+            <lightning-input type="file" label="CSVファイルを選択" onchange={handleFileChange} accept=".csv"></lightning-input>
+            
+            <div class="slds-p-vertical_small">
+                <lightning-input type="search" label="オブジェクトタイプ検索" value={searchText} onchange={handleSearchTextChange}></lightning-input>
+                <lightning-button label="検索" onclick={handleSearchClick}></lightning-button>
+            </div>
+
+            <lightning-combobox 
+                name="objectType" 
+                label="オブジェクトタイプ" 
+                value={objectTypeName} 
+                options={objectTypeOptions} 
+                onchange={handleObjectTypeChange}
+                placeholder="オブジェクトタイプを選択"
+            ></lightning-combobox>
+
+            <lightning-combobox 
+                name="operationType" 
+                label="操作タイプ" 
+                value={operationType} 
+                options={operationTypeOptions} 
+                onchange={handleOperationTypeChange}
+            ></lightning-combobox>
+
+            <lightning-combobox 
+                name="lineEnding" 
+                label="行の終端文字" 
+                value={lineEnding} 
+                options={lineEndingOptions} 
+                onchange={handleLineEndingChange}
+            ></lightning-combobox>
+
+            <lightning-button label="アップロード" onclick={uploadFile} disabled={isUploadButtonDisabled}></lightning-button>
+        </div>
+    </lightning-card>
+</template>

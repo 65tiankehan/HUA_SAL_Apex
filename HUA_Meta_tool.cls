@@ -1014,4 +1014,105 @@ public without sharing class HUA_Meta_tool {
     }
 
     
+    /**
+     * HUA_Meta_tool.cls
+     *
+     * すべてのアクセス可能なカスタムおよび標準オブジェクトの情報を取得します。
+     * 
+     * @return オブジェクトラベルをキーとし、オブジェクト情報（名前とラベル）のリストを値とするマップを返します。
+     */
+    public static Map<String, List<Object>> getAllObjects(List<String> objectNames) {
+        try {
+            // グローバルオブジェクトの説明を取得
+            Map<String, Schema.SObjectType> globalDescribe = Schema.getGlobalDescribe();
+            // オブジェクト情報を格納するマップを初期化
+            Map<String, List<Object>> objectInfos = new Map<String, List<Object>>();
+    
+            // すべてのオブジェクトをループ処理
+            for (String objectName : globalDescribe.keySet()) {
+                
+                if (objectNames != null && !objectNames.isEmpty() && !objectNames.contains(objectName)) {
+                    continue;
+                }
+    
+                Schema.SObjectType sObjectType = globalDescribe.get(objectName);
+                Schema.DescribeSObjectResult describeResult = sObjectType.getDescribe();
+    
+               
+               
+                // オブジェクトがアクセス可能かどうかチェック
+                if (describeResult.isAccessible()) {
+                    String label = describeResult.getLabel();
+                    // 単一のオブジェクト情報を格納するマップを作成
+                    Map<String, String> objectInfo = new Map<String, String>{
+                        'label' => label,
+                        'name' => sObjectType.getDescribe().getName()
+                    };
+    
+                    // マップにそのラベルが存在しない場合、新しいリストを作成
+                    if (!objectInfos.containsKey(label)) {
+                        objectInfos.put(label, new List<Object>());
+                    }
+                    // 対応するラベルリストにオブジェクト情報を追加
+                    objectInfos.get(label).add(objectInfo);
+                }
+            }
+    
+            // すべてのオブジェクト情報を含むマップを返す
+            return objectInfos;
+        } catch (Exception e) {
+            // 处理异常，返回一个空的Map或默认的常用对象
+            System.debug('Error in getAllObjects: ' + e.getMessage());
+            return new Map<String, List<Object>>();
+        }
+    }
+
+     /**
+     * HUA_Meta_tool.cls
+     *
+     * 単一の名詞を受け取り、Schema.getGlobalDescribe() が返す key で like モードでの検索を行う
+     * @param searchKeyword 検索キーワード
+     * @return マッチしたオブジェクト情報の Map
+     */
+    public static Map<String, List<Object>> searchObjectsLike(String searchKeyword) {
+        try {
+            // グローバルオブジェクトの説明を取得
+            Map<String, Schema.SObjectType> globalDescribe = Schema.getGlobalDescribe();
+            // オブジェクト情報を格納する Map を初期化
+            Map<String, List<Object>> objectInfos = new Map<String, List<Object>>();
+
+            // すべてのオブジェクトをループ処理
+            for (String objectName : globalDescribe.keySet()) {
+                // オブジェクト名が検索キーワードを含むか確認
+                if (objectName.toLowerCase().contains(searchKeyword.toLowerCase())) {
+                    Schema.SObjectType sObjectType = globalDescribe.get(objectName);
+                    Schema.DescribeSObjectResult describeResult = sObjectType.getDescribe();
+
+                    // オブジェクトがアクセス可能かどうかチェック
+                    if (describeResult.isAccessible()) {
+                        String label = describeResult.getLabel();
+                        // 単一のオブジェクト情報を格納する Map を作成
+                        Map<String, String> objectInfo = new Map<String, String>{
+                            'label' => label,
+                            'name' => sObjectType.getDescribe().getName()
+                        };
+
+                        // Map にそのラベルが存在しない場合、新しいリストを作成
+                        if (!objectInfos.containsKey(label)) {
+                            objectInfos.put(label, new List<Object>());
+                        }
+                        // 対応するラベルリストにオブジェクト情報を追加
+                        objectInfos.get(label).add(objectInfo);
+                    }
+                }
+            }
+
+            // すべてのマッチしたオブジェクト情報を含む Map を返す
+            return objectInfos;
+        } catch (Exception e) {
+            // 例外を処理し、空の Map またはデフォルトの一般的なオブジェクトを返す
+            System.debug('Error in searchObjectsLike: ' + e.getMessage());
+            return new Map<String, List<Object>>();
+        }
+    }
 }

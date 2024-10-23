@@ -25,7 +25,12 @@ public without sharing class HUA_BulkAPI20Helper {
      * @param operation 実行する操作（例: insert, update）
      * @return 作成されたジョブのID
      */
-    public static String createJob(String objectTypeName, String operation) {
+    public static String createJob(String objectTypeName, String operation, String lineEnding) {
+      
+        if (lineEnding == null || String.isEmpty(lineEnding.trim())) {
+            lineEnding = 'LF';
+        }
+
         HttpRequest req = new HttpRequest();
         req.setEndpoint(BASE_URL);
         req.setMethod('POST');
@@ -34,7 +39,8 @@ public without sharing class HUA_BulkAPI20Helper {
         req.setHeader('Accept', 'application/json');
         req.setHeader('X-PrettyPrint', '1');
 
-        String jobJson = '{"object" : "' + objectTypeName + '", "contentType" : "CSV", "operation" : "' + operation + '", "lineEnding" : "LF"}';
+        String jobJson = '{"object" : "' + objectTypeName + '", "contentType" : "CSV", "operation" : "' + operation + '", "lineEnding" : "' + lineEnding + '"}';
+     
         req.setBody(jobJson);
 
         Http http = new Http();
@@ -68,6 +74,7 @@ public without sharing class HUA_BulkAPI20Helper {
         HttpResponse res = http.send(req);
 
         if (res.getStatusCode() != 200) {
+            System.debug(''+res.getStatusCode()+' '+res.getStatus());
             System.debug('Error uploading data: ' + res.getBody());
         }
     }
@@ -161,12 +168,12 @@ public without sharing class HUA_BulkAPI20Helper {
      * @param objectTypeName オブジェクトのタイプ名
      * @param operation 実行する操作（例: insert, update）
      */
-    public static void performBulkInsert(Map<String, List<String>> dataMap, String objectTypeName, String operation) {
+    public static void performBulkInsert(Map<String, List<String>> dataMap, String objectTypeName, String operation,String lineEnding) {
         // MapをCSV文字列に変換する
         String csvData = convertMapToCsv(dataMap);
 
         // ジョブを作成する
-        String jobId = createJob(objectTypeName, operation);
+        String jobId = createJob(objectTypeName, operation,lineEnding);
         if (jobId == null) {
             System.debug('Failed to create job.');
             return;
@@ -234,9 +241,9 @@ public without sharing class HUA_BulkAPI20Helper {
      * @param recordIds 削除対象のレコードIDリスト
      * @param objectTypeName オブジェクトタイプ名
      */
-    public static void performBulkDelete(List<String> recordIds, String objectTypeName) {
+    public static void performBulkDelete(List<String> recordIds, String objectTypeName,String lineEnding) {
         // 削除ジョブを作成する
-        String jobId = createJob(objectTypeName, 'delete');
+        String jobId = createJob(objectTypeName, 'delete',lineEnding);
         if (jobId == null) {
             System.debug('ジョブの作成に失敗しました。');
             return;
